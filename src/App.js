@@ -1,5 +1,6 @@
 import React from "react";
 import List from "./List";
+import "./App.css";
 
 function App({ store }) {
   const listInfo = store.lists.map((listHeader) => {

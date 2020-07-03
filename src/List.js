@@ -8,9 +8,6 @@ function List({ header, cards }) {
       <header>{header}</header>
       <div className="List-cards">
         {cards.map((card) => {
-          {
-            console.log(card);
-          }
           return (
             <Card title={card.title} content={card.content} key={card.id} />
           );
