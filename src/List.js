@@ -5,17 +5,20 @@ import Card from "./Card";
 function List({ header, cards }) {
   return (
     <section className="List">
-      <header>{header}</header>
+      <header className="List-header">
+        <h2>{header}</h2>
+      </header>
       <div className="List-cards">
         {cards.map((card) => {
           return (
             <Card title={card.title} content={card.content} key={card.id} />
           );
         })}
+
+        <button type="button" className="List-add-button">
+          + Add Random Card
+        </button>
       </div>
-      <button type="button" class="List-add-button">
-        + Add Random Card
-      </button>
     </section>
   );
 }
