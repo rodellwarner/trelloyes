@@ -3,12 +3,12 @@ import List from "./List";
 import "./App.css";
 
 function App({ store }) {
-  const listInfo = store.lists.map((listHeader) => {
+  const listInfo = store.lists.map((listData) => {
     return (
       <List
-        header={listHeader.header}
-        cards={listHeader.cardIds.map((id) => store.allCards[id])}
-        key={listHeader.id}
+        header={listData.header}
+        cards={listData.cardIds.map((id) => store.allCards[id])}
+        key={listData.id}
       />
     );
   });

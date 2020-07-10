@@ -9,10 +9,8 @@ function List({ header, cards }) {
         <h2>{header}</h2>
       </header>
       <div className="List-cards">
-        {cards.map((card) => {
-          return (
-            <Card title={card.title} content={card.content} key={card.id} />
-          );
+        {cards.map((card, index) => {
+          return <Card title={card.title} content={card.content} key={index} />;
         })}
 
         <button type="button" className="List-add-button">
