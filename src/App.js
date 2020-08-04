@@ -60,6 +60,14 @@ class App extends React.Component {
     };
   }
 
+  handleAddRandomCard() {
+    console.log("Add Random Card Called");
+  }
+
+  handleDeleteCard() {
+    console.log("Delete Card Called");
+  }
+
   render() {
     const listInfo = this.state.lists.map((listData) => {
       return (
@@ -67,6 +75,8 @@ class App extends React.Component {
           header={listData.header}
           cards={listData.cardIds.map((id) => this.state.allCards[id])}
           key={listData.id}
+          onAddRandomCard={this.handleAddRandomCard}
+          onDeleteCard={this.handleDeleteCard}
         />
       );
     });
@@ -81,6 +91,12 @@ class App extends React.Component {
     );
   }
 }
+
+//++++
+//USING STORE, AS COMMENTED OUT BELOW, REQUIRES (in index-js):
+//import STORE from "./store";
+//ReactDOM.render(<App store={STORE} />, document.getElementById("root"));
+//+++++
 
 // function App({ store }) {
 //   const listInfo = store.lists.map((listData) => {
