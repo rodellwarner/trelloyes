@@ -2,6 +2,11 @@ import React from "react";
 import List from "./List";
 import "./App.css";
 
+function omit(obj, keyToOmit) {
+  let { [keyToOmit]: _, ...rest } = obj;
+  return rest;
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -60,23 +65,65 @@ class App extends React.Component {
     };
   }
 
-  handleAddRandomCard() {
+  handleAddRandomCard = (listId) => {
     console.log("Add Random Card Called");
-  }
+    console.log("The List We're Editing Is ", listId);
+    // Generate random card
+    const newRandomCard = () => {
+      const id =
+        Math.random().toString(36).substring(2, 4) +
+        Math.random().toString(36).substring(2, 4);
+      return {
+        id,
+        title: `Random Card ${id}`,
+        content: "lorem ipsum",
+      };
+    };
+    // console.log("Console log - call the function newRandomCard(): ", newRandomCard());
 
-  handleDeleteCard() {
+    const newCard = newRandomCard();
+
+    console.log("Console log newCard: ", newCard);
+
+    // Add newCard id to cardIds in selected list
+
+    const newLists = this.state.lists.map((list) => {
+      if (list.id === listId) {
+        return {
+          ...list,
+          cardIds: [...list.cardIds, newCard.id],
+        };
+      }
+      return list;
+    });
+    console.log("Console Log New Lists: ", newLists);
+
+    // Add newCard to "allCards"
+
+    this.setState({
+      lists: newLists,
+      allCards: { ...this.state.allCards, [newCard.id]: newCard },
+    });
+
+    // Add new random card to selected list
+  };
+
+  handleDeleteCard(cardId) {
     console.log("Delete Card Called");
+    console.log(cardId);
   }
 
   render() {
-    const listInfo = this.state.lists.map((listData) => {
+    console.log("Console log this.state.allCards: ", this.state.allCards);
+    const listInfo = this.state.lists.map((listData, index) => {
       return (
         <List
           header={listData.header}
           cards={listData.cardIds.map((id) => this.state.allCards[id])}
-          key={listData.id}
+          id={listData.id}
           onAddRandomCard={this.handleAddRandomCard}
           onDeleteCard={this.handleDeleteCard}
+          key={index}
         />
       );
     });

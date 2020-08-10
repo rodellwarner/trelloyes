@@ -2,7 +2,7 @@ import React from "react";
 import "./List.css";
 import Card from "./Card";
 
-function List({ header, cards, onAddRandomCard, onDeleteCard }) {
+function List({ header, cards, onAddRandomCard, onDeleteCard, id }) {
   return (
     <section className="List">
       <header className="List-header">
@@ -14,8 +14,9 @@ function List({ header, cards, onAddRandomCard, onDeleteCard }) {
             <Card
               title={card.title}
               content={card.content}
-              key={index}
               connectionToOnDeletecard={onDeleteCard}
+              cardId={card.id}
+              key={index}
             />
           );
         })}
@@ -23,7 +24,7 @@ function List({ header, cards, onAddRandomCard, onDeleteCard }) {
         <button
           type="button"
           className="List-add-button"
-          onClick={onAddRandomCard}
+          onClick={() => onAddRandomCard(id)}
         >
           + Add Random Card
         </button>
