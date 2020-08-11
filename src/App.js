@@ -66,8 +66,8 @@ class App extends React.Component {
   }
 
   handleAddRandomCard = (listId) => {
-    console.log("Add Random Card Called");
-    console.log("The List We're Editing Is ", listId);
+    // console.log("Add Random Card Called");
+    // console.log("The List We're Editing Is ", listId);
     // Generate random card
     const newRandomCard = () => {
       const id =
@@ -83,7 +83,7 @@ class App extends React.Component {
 
     const newCard = newRandomCard();
 
-    console.log("Console log newCard: ", newCard);
+    // console.log("Console log newCard: ", newCard);
 
     // Add newCard id to cardIds in selected list
 
@@ -96,7 +96,7 @@ class App extends React.Component {
       }
       return list;
     });
-    console.log("Console Log New Lists: ", newLists);
+    // console.log("Console Log New Lists: ", newLists);
 
     // Add newCard to "allCards"
 
@@ -108,13 +108,22 @@ class App extends React.Component {
     // Add new random card to selected list
   };
 
-  handleDeleteCard(cardId) {
-    console.log("Delete Card Called");
-    console.log(cardId);
-  }
+  handleDeleteCard = (cardId) => {
+    // console.log("Delete Card Called");
+    // console.log("Console Log cardId, ", cardId);
+
+    const newLists = this.state.lists.map((list) => ({
+      ...list,
+      cardIds: list.cardIds.filter((id) => id !== cardId),
+    }));
+
+    const newCards = omit(this.state.allCards, cardId);
+
+    this.setState({ lists: newLists, allCards: newCards });
+  };
 
   render() {
-    console.log("Console log this.state.allCards: ", this.state.allCards);
+    // console.log("Console log this.state.allCards: ", this.state.allCards);
     const listInfo = this.state.lists.map((listData, index) => {
       return (
         <List
