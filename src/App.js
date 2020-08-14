@@ -66,8 +66,6 @@ class App extends React.Component {
   }
 
   handleAddRandomCard = (listId) => {
-    // console.log("Add Random Card Called");
-    // console.log("The List We're Editing Is ", listId);
     // Generate random card
     const newRandomCard = () => {
       const id =
@@ -79,47 +77,47 @@ class App extends React.Component {
         content: "lorem ipsum",
       };
     };
-    // console.log("Console log - call the function newRandomCard(): ", newRandomCard());
 
     const newCard = newRandomCard();
 
-    // console.log("Console log newCard: ", newCard);
-
     // Add newCard id to cardIds in selected list
-
-    const newLists = this.state.lists.map((list) => {
-      if (list.id === listId) {
-        return {
-          ...list,
-          cardIds: [...list.cardIds, newCard.id],
-        };
-      }
-      return list;
-    });
-    // console.log("Console Log New Lists: ", newLists);
 
     // Add newCard to "allCards"
 
-    this.setState({
-      lists: newLists,
-      allCards: { ...this.state.allCards, [newCard.id]: newCard },
+    this.setState((prevState) => {
+      const newLists = prevState.lists.map((list) => {
+        if (list.id === listId) {
+          return {
+            ...list,
+            cardIds: [...list.cardIds, newCard.id],
+          };
+        }
+        return list;
+      });
+
+      return {
+        lists: newLists,
+        allCards: { ...prevState.allCards, [newCard.id]: newCard },
+      };
     });
 
     // Add new random card to selected list
   };
 
   handleDeleteCard = (cardId) => {
-    // console.log("Delete Card Called");
-    // console.log("Console Log cardId, ", cardId);
+    this.setState((prevState) => {
+      const newLists = prevState.lists.map((list) => ({
+        ...list,
+        cardIds: list.cardIds.filter((id) => id !== cardId),
+      }));
 
-    const newLists = this.state.lists.map((list) => ({
-      ...list,
-      cardIds: list.cardIds.filter((id) => id !== cardId),
-    }));
+      const newCards = omit(this.state.allCards, cardId);
 
-    const newCards = omit(this.state.allCards, cardId);
-
-    this.setState({ lists: newLists, allCards: newCards });
+      return {
+        lists: newLists,
+        allCards: newCards,
+      };
+    });
   };
 
   render() {
